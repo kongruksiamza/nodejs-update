@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>KongRuksiam Shop</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        <script src="js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="js/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <div class="container">
+            <h2>จัดการสินค้า</h2>
+            <p>เพิ่ม ลบ แก้ไขข้อมูลในฐานข้อมูล <a href="/logout">ออกจากระบบ</a></p>            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ชื่อสินค้า</th>
+                        <th>ราคา</th>
+                        <th>รายละเอียด</th>
+                        <th>ลบ</th>
+                        <th>แก้ไข</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.values(products).forEach(function(item){%>
+                    <tr>
+                        <td><%= item.name%></td>
+                        <td><%= item.price%></td>
+                        <td><%= item.description%></td>
+                        <td><a class="btn btn-danger" href="/delete/<%= item._id%>" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่ ?')">ลบ</a></td>
+                        <td>
+                            <form action="/edit" method="POST">
+                                <input type="hidden" name="edit_id" value="<%= item._id%>">
+                                <button type="submit" class="btn btn-primary">แก้ไข</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
